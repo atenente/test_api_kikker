@@ -6,7 +6,7 @@ RSpec.describe Api::V1::PostsController, type: :request do
 
     let(:valid_params) do
       {
-        user: {login: login},
+        user: { login: login },
         post: {
           title: Faker::Book.title,
           body: Faker::Lorem.paragraph,
@@ -15,12 +15,12 @@ RSpec.describe Api::V1::PostsController, type: :request do
       }
     end
 
-    let(:invalid_params) do { user: {login: ''}, post: { title: '', body: '', ip: '' } } end
+    let(:invalid_params) { { user: { login: '' }, post: { title: '', body: '', ip: '' } } }
 
     it 'cria um novo post e usuário se necessário' do
-      expect {
+      expect do
         post '/api/v1/posts', params: valid_params
-      }.to change(Post, :count).by(1).and change(User, :count).by(1)
+      end.to change(Post, :count).by(1).and change(User, :count).by(1)
 
       expect(response).to have_http_status(:created)
 
