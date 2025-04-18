@@ -1,4 +1,6 @@
 # Representa um usuario
 class User < ApplicationRecord
-  validates :login, presence: true
+  has_many :posts
+
+  validates :login, presence: true, uniqueness: true
 end
