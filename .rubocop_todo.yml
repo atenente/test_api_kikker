@@ -92,6 +92,8 @@ Style/IfUnlessModifier:
 # Configuration parameters: Strict, AllowedNumbers, AllowedPatterns.
 Style/NumericLiterals:
   MinDigits: 10
+  Exclude:
+    - 'db/schema.rb'
 
 # Offense count: 1
 # This cop supports safe autocorrection (--autocorrect).
