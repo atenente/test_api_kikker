@@ -3,11 +3,6 @@
 module Api
   module V1
     class RatingsController < ApplicationController
-      def index
-        @ratings = Rating.all
-        render json: @ratings
-      end
-
       def create
         post = Post.find_by(user_id: rating_params[:user_id].to_i)
         rating = post.ratings.build(rating_params)
