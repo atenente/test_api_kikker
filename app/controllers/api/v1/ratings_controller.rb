@@ -5,6 +5,8 @@ module Api
     class RatingsController < ApplicationController
       def create
         post = Post.find_by(user_id: rating_params[:user_id].to_i)
+        return render json: { errors: { post: ['não encontrado'] } }, status: :unprocessable_entity if post.nil?
+
         rating = post.ratings.build(rating_params)
 
         if rating.save
