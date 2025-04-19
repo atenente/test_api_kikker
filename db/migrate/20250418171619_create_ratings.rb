@@ -1,3 +1,4 @@
+# Migration to create the ratings table
 class CreateRatings < ActiveRecord::Migration[7.1]
   def change
     create_table :ratings do |t|

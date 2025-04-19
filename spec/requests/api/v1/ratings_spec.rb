@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe Api::V1::RatingsController, type: :request do
   describe 'POST /api/v1/ratings' do
-    let(:user_id) { 1 }
-    let(:post_record) { create(:post, user_id: user_id) }
+    let(:user) { create(:user) }
+    let(:post_record) { create(:post, user_id: user.id) }
 
     context 'com parâmetros válidos' do
       it 'cria a avaliação e retorna a média atualizada' do
@@ -12,13 +12,13 @@ RSpec.describe Api::V1::RatingsController, type: :request do
         post '/api/v1/ratings', params: {
           rating: {
             post_id: post_record.id,
-            user_id: user_id,
+            user_id: user.id,
             value: 5
           }
         }.to_json, headers: { 'CONTENT_TYPE' => 'application/json' }
 
         expect(response).to have_http_status(:created)
-        json = JSON.parse(response.body)
+        json = response.parsed_body
         expect(json['average_rating']).to eq(4.0)
       end
     end
@@ -28,13 +28,13 @@ RSpec.describe Api::V1::RatingsController, type: :request do
         post '/api/v1/ratings', params: {
           rating: {
             post_id: post_record.id,
-            user_id: user_id,
+            user_id: user.id,
             value: 8
           }
         }.to_json, headers: { 'CONTENT_TYPE' => 'application/json' }
 
         expect(response).to have_http_status(:unprocessable_entity)
-        json = JSON.parse(response.body)
+        json = response.parsed_body
         expect(json['errors']).to be_present
       end
     end
@@ -50,7 +50,7 @@ RSpec.describe Api::V1::RatingsController, type: :request do
         }.to_json, headers: { 'CONTENT_TYPE' => 'application/json' }
 
         expect(response).to have_http_status(:unprocessable_entity)
-        json = JSON.parse(response.body)
+        json = response.parsed_body
         expect(json['errors']).to be_present
       end
     end
