@@ -24,7 +24,7 @@ RSpec.describe Api::V1::PostsController, type: :request do
 
       expect(response).to have_http_status(:created)
 
-      json = JSON.parse(response.body)
+      json = response.parsed_body
       expect(json['post']['title']).to eq(valid_params[:post][:title])
       expect(json['post']['body']).to eq(valid_params[:post][:body])
       expect(json['post']['ip']).to eq(valid_params[:post][:ip])
@@ -36,7 +36,7 @@ RSpec.describe Api::V1::PostsController, type: :request do
 
       expect(response).to have_http_status(:unprocessable_entity)
 
-      json = JSON.parse(response.body)
+      json = response.parsed_body
       expect(json['errors']).to be_present
     end
   end

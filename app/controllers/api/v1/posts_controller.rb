@@ -1,7 +1,9 @@
 # app/controllers/api/v1/posts_controller.rb
 
 module Api
+  # Namespace da versão 1 da API
   module V1
+    # Controller para ações relacionadas a posts
     class PostsController < ApplicationController
       def index
         @posts = Post.all
