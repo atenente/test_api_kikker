@@ -20,25 +20,13 @@ module Api
       end
 
       def top_posts
-        posts = Post.joins(:ratings)
-                    .select("posts.*, AVG(ratings.value) as avg_rating")
-                    .group("posts.id")
-                    .order("avg_rating DESC")
-                    .limit(10)
-        render json: posts.as_json(methods: :avg_rating)
+        @top_posts = Post.top_posts
+        render json: @top_posts.as_json(methods: :avg_rating)
       end
 
       def authors_ips
-        result = Post.joins(:user)
-                     .select("DISTINCT posts.ip, users.login")
-                     .group_by(&:ip)
-                     .map do |ip, grouped_posts|
-                       {
-                         ip: ip,
-                         authors: grouped_posts.map(&:login).uniq
-                       }
-                     end
-        render json: result
+        @authors_ips = Post.authors_ips
+        render json: @authors_ips
       end
 
       private
