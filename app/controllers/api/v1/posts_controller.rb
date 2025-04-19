@@ -19,6 +19,16 @@ module Api
         end
       end
 
+      def top_posts
+        @top_posts = Post.top_posts
+        render json: @top_posts.as_json(methods: :avg_rating)
+      end
+
+      def authors_ips
+        @authors_ips = Post.authors_ips
+        render json: @authors_ips
+      end
+
       private
 
       def post_params
