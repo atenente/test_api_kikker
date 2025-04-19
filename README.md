@@ -20,6 +20,52 @@ Documentação de desenvolvimento:
 - **rspec-rails** - Framework de testes
 - **simplecov** - Verificar cobertura de testes
 
+## Entrypoints
+
+<details>
+  <summary>Posts</summary>
+  ### Requests
+
+  [![Generic badge](https://img.shields.io/badge/Request-POST-blue.svg)](https://img.shields.io/)
+
+  ```
+  http://localhost:3000/api/v1/posts
+  ```
+
+  ### Body.json
+  {
+    user: { login: string },
+    post: {
+      title: string,
+      body: text,
+      ip: strinh
+    }
+  }
+</details>
+
+<details>
+  <summary>Ratings</summary>
+
+  ### Requests
+
+  [![Generic badge](https://img.shields.io/badge/Request-POST-blue.svg)](https://img.shields.io/)
+
+  ```
+  http://localhost:3000/api/v1/ratings
+  ```
+
+  ### Body.json
+  {
+      "rating": {
+      "post_id": 1,
+      "user_id": 2,
+      "value": 5
+      }
+  }
+</details>
+
+
+
 ## 🚀 Como Rodar o Projeto
 
 ### Pré-requisitos
