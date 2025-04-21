@@ -19,11 +19,13 @@ Documentação de desenvolvimento:
 - **rack-cors** - Permite requisições entre domínios diferentes (CORS)
 - **rspec-rails** - Framework de testes
 - **simplecov** - Verificar cobertura de testes
+- **sidekiq** - Para processos em segundo plano
 
 ## Entrypoints
 
 <details>
   <summary>Posts</summary>
+
   ### Requests
 
   [![Generic badge](https://img.shields.io/badge/Request-POST-blue.svg)](https://img.shields.io/)
@@ -34,11 +36,11 @@ Documentação de desenvolvimento:
 
   ### Body.json
   {
-    user: { login: string },
-    post: {
-      title: string,
-      body: text,
-      ip: strinh
+    "user": { "login": "string" },
+    "post": {
+      "title": "string",
+      "body": "text",
+      "ip": "string"
     }
   }
 </details>
@@ -73,6 +75,7 @@ Documentação de desenvolvimento:
 - [Ruby](https://www.ruby-lang.org/pt/downloads/) - Versão 3.4.3
 - [Rails](https://rubygems.org/gems/rails/versions/7.1.3) - Versão 7.1.3
 - [PostgreSQL](https://www.postgresql.org/download/) - Versão 14
+- [Redis] - Versão >= 7 para execução de jobs com Sidekiq
 
 ### Instalação
 
