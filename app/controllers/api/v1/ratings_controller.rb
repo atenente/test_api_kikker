@@ -9,14 +9,9 @@ module Api
         post = find_post
         return render json: { errors: { post: ['não encontrado'] } }, status: :unprocessable_entity if post.nil?
 
-        rating = post.ratings.build(rating_params)
+        JobRatings.perform_later(rating_params.to_h)
 
-        if rating.save
-          avg = Rating.where(post_id: rating.post_id).average(:value)
-          render json: { average_rating: avg.to_f.round(2) }, status: :created
-        else
-          render json: { errors: combined_errors(post, rating) }, status: :unprocessable_entity
-        end
+        render json: { message: 'Rating será processado em segundo plano.' }, status: :accepted
       end
 
       private
