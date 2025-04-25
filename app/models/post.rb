@@ -17,6 +17,8 @@ class Post < ApplicationRecord
     Post.joins(:user)
         .select("DISTINCT posts.ip, users.login")
         .group_by(&:ip)
-        .map do |ip, grouped_posts| { ip: ip, authors: grouped_posts.map(&:login).uniq } end
+        .map do |ip, grouped_posts|
+      { ip: ip, authors: grouped_posts.map(&:login).uniq }
+    end
   end
 end

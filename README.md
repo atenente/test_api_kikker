@@ -21,12 +21,10 @@ Documentação de desenvolvimento:
 - **simplecov** - Verificar cobertura de testes
 - **sidekiq** - Para processos em segundo plano
 
-## Entrypoints
+## 🔗 Entrypoints
 
 <details>
   <summary>Posts</summary>
-
-  ### Requests
 
   [![Generic badge](https://img.shields.io/badge/Request-POST-blue.svg)](https://img.shields.io/)
 
@@ -48,8 +46,6 @@ Documentação de desenvolvimento:
 <details>
   <summary>Ratings</summary>
 
-  ### Requests
-
   [![Generic badge](https://img.shields.io/badge/Request-POST-blue.svg)](https://img.shields.io/)
 
   ```
@@ -65,8 +61,22 @@ Documentação de desenvolvimento:
       }
   }
 </details>
+<details>
+  <summary>Relatórios</summary>
 
+  [![Generic badge](https://img.shields.io/badge/Request-GET-green.svg)](https://img.shields.io/)
 
+  ```
+  http://localhost:3000/api/v1/posts
+  ```
+  ```
+  http://localhost:3000/api/v1/posts/top_posts
+  ```
+  ```
+  http://localhost:3000/api/v1/posts/authors_ips
+  ```
+
+</details>
 
 ## 🚀 Como Rodar o Projeto
 
@@ -75,12 +85,40 @@ Documentação de desenvolvimento:
 - [Ruby](https://www.ruby-lang.org/pt/downloads/) - Versão 3.4.3
 - [Rails](https://rubygems.org/gems/rails/versions/7.1.3) - Versão 7.1.3
 - [PostgreSQL](https://www.postgresql.org/download/) - Versão 14
-- [Redis] - Versão >= 7 para execução de jobs com Sidekiq
+- [Redis](https://github.com/redis/redis) - Versão >= 7 para execução de jobs com Sidekiq
 
 ### Instalação
 
 1. Clone o repositório:
 
-   ```bash
-   git clone https://github.com/atenente/test_api_kikker.git
-   cd test_api_kikker
+  ```bash
+    git clone https://github.com/atenente/test_api_kikker.git
+    cd test_api_kikker
+    bin/setup
+    rails s
+  ```
+
+2. Popular dados:
+
+  ```bash
+    rails db:seed
+  ```
+
+3. Processamento em background:
+
+  ```bash
+    sudo service redis-server start
+  ```
+
+  ```bash
+    bundle exec sidekiq
+  ```
+
+4. Testes:
+
+  ```bash
+    rspec
+  ```
+  ```bash
+    rubocop
+  ```
