@@ -40,8 +40,8 @@ end
 
 # Criação de ratings
 Rails.logger.debug "Gerando ratings..."
+used_votes = {}
 TOTAL_RATINGS.times do
-  used_votes = {}
   post_id = rand(1..TOTAL_POSTS)
   user_id = rand(1..TOTAL_USERS)
   key = "#{user_id}-#{post_id}"
@@ -59,7 +59,7 @@ TOTAL_RATINGS.times do
     }
   }
 
-  HTTParty.post('http://localhost:3000/api/v1/posts',
+  HTTParty.post('http://localhost:3000/api/v1/ratings',
                 body: payload.to_json,
                 headers: { 'Content-Type' => 'application/json' })
 end

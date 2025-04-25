@@ -6,7 +6,7 @@ RSpec.describe Api::V1::RatingsController, type: :request do
     let(:post_record) { create(:post, user_id: user.id) }
 
     context 'com parâmetros válidos' do
-      it 'cria a avaliação e retorna a média atualizada' do
+      it 'cria a avaliação e retorna a mensagem de que será processada em segundo plano' do
         create(:rating, post: post_record, value: 3)
 
         post '/api/v1/ratings', params: {
@@ -17,9 +17,9 @@ RSpec.describe Api::V1::RatingsController, type: :request do
           }
         }.to_json, headers: { 'CONTENT_TYPE' => 'application/json' }
 
-        expect(response).to have_http_status(:created)
+        expect(response).to have_http_status(:accepted)
         json = response.parsed_body
-        expect(json['average_rating']).to eq(4.0)
+        expect(json['message']).to eq('Rating será processado em segundo plano.')
       end
     end
 

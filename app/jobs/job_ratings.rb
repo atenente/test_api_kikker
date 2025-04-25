@@ -1,11 +1,10 @@
 # app/jobs/job_ratings.rb
-
 class JobRatings < ApplicationJob
   queue_as :default
 
+  # adiciona rating
   def perform(rating_params)
-    post = Post.find_by(user_id: rating_params["user_id"].to_i)
-    return if post.nil?
+    return unless valid_data?(rating_params)
 
     rating = post.ratings.build(rating_params)
 
@@ -15,5 +14,13 @@ class JobRatings < ApplicationJob
     else
       Rails.logger.error("Erros ao salvar rating: #{rating.errors.full_messages}")
     end
+  end
+
+  private
+
+  def valid_data?(params)
+    @user = User.find_by(id: params['user_id'])
+    @post = Post.find_by(id: params['post_id'])
+    @user.present? && @post.present?
   end
 end

@@ -9,6 +9,9 @@ module Api
         post = find_post
         return render json: { errors: { post: ['não encontrado'] } }, status: :unprocessable_entity if post.nil?
 
+        rating = Rating.new(rating_params)
+        return render json: { errors: rating.errors.full_messages }, status: :unprocessable_entity unless rating.valid?
+
         JobRatings.perform_later(rating_params.to_h)
 
         render json: { message: 'Rating será processado em segundo plano.' }, status: :accepted
