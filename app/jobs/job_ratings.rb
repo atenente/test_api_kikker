@@ -6,7 +6,7 @@ class JobRatings < ApplicationJob
   def perform(rating_params)
     return unless valid_data?(rating_params)
 
-    rating = post.ratings.build(rating_params)
+    rating = @post.ratings.build(user: @user, value: rating_params['value'])
 
     if rating.save
       avg = Rating.where(post_id: rating.post_id).average(:value)
@@ -19,8 +19,8 @@ class JobRatings < ApplicationJob
   private
 
   def valid_data?(params)
-    @user = User.find_by(id: params['user_id'])
-    @post = Post.find_by(id: params['post_id'])
+    @user = User.find(params['user_id'])
+    @post = Post.find(params['post_id'])
     @user.present? && @post.present?
   end
 end

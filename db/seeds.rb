@@ -16,6 +16,8 @@ User.delete_all
 Rails.logger.debug "Bancos limpos com sucesso!"
 
 # Criação de posts
+user_ids = []
+post_ids = []
 Rails.logger.debug "Gerando posts..."
 TOTAL_POSTS.times do |_i|
   login = Faker::Internet.unique.username
@@ -33,28 +35,32 @@ TOTAL_POSTS.times do |_i|
     }
   }
 
-  HTTParty.post('http://localhost:3000/api/v1/posts',
-                body: payload.to_json,
-                headers: { 'Content-Type' => 'application/json' })
+  begin
+    response = HTTParty.post('http://localhost:3000/api/v1/posts',
+                             body: payload.to_json,
+                             headers: { 'Content-Type' => 'application/json' })
+
+    if response.success?
+      json = JSON.parse(response.body)
+      user_ids << json['user']['id'] unless user_ids.include?(json['user']['id'])
+      post_ids << json['post']['id']
+    else
+      Rails.logger.debug { "Erro ao criar post: #{response.code} - #{response.body}" }
+    end
+  rescue StandardError => e
+    Rails.logger.debug { "Exceção ao fazer requisição: #{e.message}" }
+  end
 end
 
 # Criação de ratings
 Rails.logger.debug "Gerando ratings..."
-used_votes = {}
 TOTAL_RATINGS.times do
-  post_id = rand(1..TOTAL_POSTS)
-  user_id = rand(1..TOTAL_USERS)
-  key = "#{user_id}-#{post_id}"
-
-  next if used_votes[key] # garante um voto por usuário por post
-
-  used_votes[key] = true
   value = rand(1..5)
 
   payload = {
     rating: {
-      post_id: post_id,
-      user_id: user_id,
+      post_id: post_ids.sample,
+      user_id: user_ids.sample,
       value: value
     }
   }
