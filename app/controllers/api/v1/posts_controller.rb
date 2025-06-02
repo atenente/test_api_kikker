@@ -11,13 +11,12 @@ module Api
       end
 
       def create
-        user = User.find_or_initialize_by(login: user_params[:login])
-        post = user.posts.build(post_params)
+        job_post = JobPosts.perform_later(user_params:, post_params:)
 
-        if user.save && post.save
-          render json: { post: post, user: user }, status: :created
+        if job_post
+          render json: { message: 'enviado ao jod' }, status: :accepted
         else
-          render json: { errors: combined_errors(user, post) }, status: :unprocessable_entity
+          render json: { message: 'ID JOB - erro ao enviar o job' }, status: :accepted
         end
       end
 

@@ -1,5 +1,5 @@
-# app/jobs/job_ratings.rb
-class JobRatings < ApplicationJob
+# app/jobs/job_posts.rb
+class JobPosts < ApplicationJob
   queue_as :default
 
   # verifica possiveis erros
@@ -7,10 +7,9 @@ class JobRatings < ApplicationJob
     Rails.logger.error "Error in MyJob: #{exception.message}"
   end
 
-  # adiciona rating
+  # adiciona posts
   def perform(**kwargs)
-    RatingService.call(**kwargs)
-    raise 'Erro em rating' if erros.any?
+    PostService.call(**kwargs)
+    raise 'Erro em posts' if erros.any?
   end
-
 end
