@@ -114,6 +114,10 @@ Documentação de desenvolvimento:
     bundle exec sidekiq
   ```
 
+  ```
+    http://localhost:3000/sidekiq
+  ```
+
 4. Testes:
 
   ```bash
@@ -122,3 +126,18 @@ Documentação de desenvolvimento:
   ```bash
     rubocop
   ```
+
+### Docker
+
+1. Criando ambientes:
+
+  ```bash
+    sudo docker-compose build
+  ```
+
+2. Iniciando:
+
+  ```bash
+    sudo docker-compose up
+  ```
+
